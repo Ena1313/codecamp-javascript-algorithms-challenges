@@ -1,0 +1,69 @@
+function checkCashRegister(price, cash, cid) {
+  const currencyUnits = { //radimo objekt u kojem su spremljene sve vrijednosti
+    "PENNY": 0.01,
+    "NICKEL": 0.05,
+    "DIME": 0.1,
+    "QUARTER": 0.25,
+    "ONE": 1,
+    "FIVE": 5,
+    "TEN": 10,
+    "TWENTY": 20,
+    "ONE HUNDRED": 100
+  };
+
+  let changeDue = cash - price; //koliko treba vratiti kao kusur
+  let totalCid = 0; //ladica gotovine sve - kasa 
+  for (let [currency, amount] of cid) { 
+    /*Inside the loop, the totalCid variable is incremented by the amount of each currency,
+     effectively summing up the total amount of cash in the drawer. 
+     This total is later used to check if there is enough cash in the 
+     drawer to provide the required change to the customer.*/
+    totalCid += amount; //napuni kasu sa totalnim amountom
+  }
+  
+  //if the total amount of cash in the drawer is less than the cange due (ako nema za vratiti kusur)
+
+  if (totalCid < changeDue) { 
+    return {status: "INSUFFICIENT_FUNDS", change: []};
+
+  //if the total amount of cash in the drawer is exactly the same as the change due
+  } else if (totalCid === changeDue) { 
+    return {status: "CLOSED", change: cid};
+  } 
+  
+  //If the total amount of cash in the drawer is greater than the change due, 
+  //the function then loops through the currencies in the cid array in reverse order. 
+  else {
+    let change = [];
+    cid = cid.reverse(); //cid == Cash In Drawer 2d Array with currencyUnits and amount; ovaj objekt gore
+   
+   //For each currency, it checks if the currency value is less than or equal to the change due and if there is still some amount of that currency left in the drawer. If so, it subtracts the currency value from the change due and from the amount of that currency in the drawer, and adds that amount to a change array.
+   
+    for (let [currency, amount] of cid) {
+      const currencyValue = currencyUnits[currency];
+      let currencyAmount = 0;
+      while (changeDue >= currencyValue && amount > 0) {
+        changeDue -= currencyValue;
+        amount -= currencyValue;
+        currencyAmount += currencyValue;
+        changeDue = Math.round(changeDue * 100) / 100;
+      }
+      if (currencyAmount > 0) {
+        change.push([currency, currencyAmount]);
+      }
+    }
+
+    //If the loop completes and there is still some change due, (ako nije vracen sav kusur) the function returns an object with a status of "INSUFFICIENT_FUNDS" and an empty array for the change. 
+      if (changeDue > 0) {
+      return {status: "INSUFFICIENT_FUNDS", change: []};
+    }
+    
+    //Otherwise, it returns an object with a status of "OPEN" and the change array, which is sorted in descending order of currency value.
+
+   
+    return {status: "OPEN", change: change};
+  }
+}
+
+
+console.log(checkCashRegister(19.5, 20, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]));

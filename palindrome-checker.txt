@@ -1,0 +1,24 @@
+function palindrome(str) {
+  const regex = /[^A-Za-z0-9]/g; //regex koji pronalazi sve sto NIJE slovo veliko ili malo ili broj
+  str = str.replace(regex, "").toLowerCase(); 
+
+  //metoda replace kao parametre prima 1. sto treba replace-ati, 2. sa cime to treba zamjeniti
+  // predali smo joj da treba sve sto nije slovo ili broj (regex) zamjeniti sa "" odnosno ni sa čim,
+  //samo ce ih skloniti
+
+  //ostaje nam izraz koji convertamo u lowercase da sve budu ista slova
+
+  let j = str.length;
+   //moramo loopati kroz rijec i sa obje strane provjeravati jesu li slova ista
+   //ako if barem jednom ne vrijedi odma vratimo false jer rijec nije palindrom
+
+   for(let i = 0; i < j; i ++) {
+
+     if(str[i] !== str[j - 1 - i]) {
+       return false;
+     }
+   }
+  return true; //u suprotnom rijec je palindrom pa vratiti true
+}
+
+palindrome("eye");

@@ -1,0 +1,15 @@
+function rot13(str) {
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; //string sa svim velikim slovima abecede
+  let cipher = "NOPQRSTUVWXYZABCDEFGHIJKLM"; //pomaknuta abeceda za 13 slova
+  const regex = /[A-Z]/g; //regex za sva velika slova
+
+  return str.replace(regex, letter => cipher[alphabet.indexOf(letter)]);
+  
+  //promjenimo sa metodom replace(sva velika slova, sa njihovim odgovarajucim shiftanim slovom)
+  //npr alphabet.indexOf(letter) == 5 iz stringa alphabet uzeli smo slovo na indexu 5 to je F 
+  //njega mijenjamo sa cipher[5] sa slovom na 5. indexu unutar stringa cipher
+ 
+ 
+}
+
+console.log(rot13("FERR PBQR PNZC"));

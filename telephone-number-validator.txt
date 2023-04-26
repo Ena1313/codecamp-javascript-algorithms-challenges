@@ -1,0 +1,25 @@
+function telephoneCheck(str) {
+
+  const regex1 = /^[0-9]{3}\-[0-9]{3}\-[0-9]{4}$/; 
+
+  //^ string mora poceti sa, \( \) otvorena/zatvorena zagrada
+  const regex2 = /^\([0-9]{3}\)[0-9]{3}\-[0-9]{4}$/; //[0-9]{3} 3 broja od 0-9 bilo koja
+  const regex3 = /^\([0-9]{3}\)\s[0-9]{3}\-[0-9]{4}$/; // \s razmak
+  const regex4 = /^[0-9]{3}\s[0-9]{3}\s[0-9]{4}$/; // \- mora biti crtica i tako ih slazemo redom
+  const regex5 = /^[0-9]{10}$/; //od pocetka 10 brojeva spojenih
+  const regex6 = /^1\s[0-9]{3}\s[0-9]{3}\s[0-9]{4}$/; // $ kraj stringa
+  const regex7 = /^1\s[0-9]{3}\-[0-9]{3}\-[0-9]{4}$/;
+  const regex8 = /^1\s\([0-9]{3}\)\s[0-9]{3}\-[0-9]{4}$/;
+  const regex9 = /^1\([0-9]{3}\)[0-9]{3}\-[0-9]{4}$/;
+
+    if (regex1.test(str) == true || regex2.test(str) == true
+     || regex3.test(str) == true || regex4.test(str) == true
+     || regex5.test(str) == true || regex6.test(str) == true
+     || regex7.test(str) == true || regex8.test(str) == true
+     || regex9.test(str) == true) {
+       return true;
+     }
+  return false;
+}
+
+console.log(telephoneCheck("1(555)555-5555"));
